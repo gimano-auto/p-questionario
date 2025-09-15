@@ -23,12 +23,12 @@ export default function Home() {
     ctxRef.current = ctx
 
     function resize() {
-      const data = canvas.toDataURL()
-      canvas.width = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
+      const data = canvas!.toDataURL()
+      canvas!.width = canvas!.offsetWidth
+      canvas!.height = canvas!.offsetHeight
       const img = new Image()
       img.src = data
-      img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      img.onload = () => ctx!.drawImage(img, 0, 0, canvas!.width, canvas!.height)
     }
     resize()
     window.addEventListener('resize', resize)
