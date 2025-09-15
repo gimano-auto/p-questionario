@@ -103,7 +103,7 @@ export default function Home() {
       {success && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-80">
           <div className="bg-white p-6 rounded-xl shadow-lg text-center space-y-4">
-            <p className="text-green-700 font-semibold text-lg">✅ PDF enviado com sucesso!</p>
+            <p className="text-green-700 font-semibold text-lg">✅ Questionário enviado com sucesso!</p>
             <button onClick={() => setSuccess(false)} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Fechar</button>
           </div>
         </div>
