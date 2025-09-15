@@ -118,32 +118,32 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block font-semibold text-gray-700">Seu nome completo *</label>
-              <input name="cliente" required className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 p-2 rounded-md"/>
+              <input name="cliente" required className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 p-2 rounded-md" />
             </div>
             <div>
               <label className="block font-semibold text-gray-700">Placa do veículo *</label>
-              <input name="placa" required className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 p-2 rounded-md"/>
+              <input name="placa" required className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 p-2 rounded-md" />
             </div>
           </div>
 
           {/* Perguntas principais */}
-          {[ 
-            { key: 'trancos', text: 'O veículo apresenta trancos ou solavancos nas trocas de marcha?', options: ['Sim','Não','Às vezes'] },
-            { key: 'demora', text: 'Sente que a transmissão está demorando para trocar de marcha?', options: ['Sim','Não','Às vezes'] },
-            { key: 'patina', text: 'O câmbio patina?', options: ['Sim','Não','Às vezes'] },
-            { key: 'ruidos', text: 'Há ruídos anormais?', options: ['Sim','Não','Às vezes'] },
-            { key: 'vibracao', text: 'Já percebeu vibração?', options: ['Sim','Não','Às vezes'] },
-            { key: 'modoSeguranca', text: 'Modo de segurança?', options: ['Sim','Não'] },
-            { key: 'vazamento', text: 'Há vazamentos?', options: ['Sim','Não','Não sei'] },
-            { key: 'luzPainel', text: 'Luz de avaria?', options: ['Sim','Não'] },
-            { key: 'fluido', text: 'O fluido já foi trocado anteriormente?', options: ['Sim','Não','Nunca'] }
+          {[
+            { key: 'trancos', text: 'O veículo apresenta trancos ou solavancos nas trocas de marcha?', options: ['Sim', 'Não', 'Às vezes'] },
+            { key: 'demora', text: 'Sente que a transmissão está demorando para trocar de marcha?', options: ['Sim', 'Não', 'Às vezes'] },
+            { key: 'patina', text: 'O câmbio patina?', options: ['Sim', 'Não', 'Às vezes'] },
+            { key: 'ruidos', text: 'Há ruídos anormais?', options: ['Sim', 'Não', 'Às vezes'] },
+            { key: 'vibracao', text: 'Já percebeu vibração?', options: ['Sim', 'Não', 'Às vezes'] },
+            { key: 'modoSeguranca', text: 'Modo de segurança?', options: ['Sim', 'Não'] },
+            { key: 'vazamento', text: 'Há vazamentos?', options: ['Sim', 'Não', 'Não sei'] },
+            { key: 'luzPainel', text: 'Luz de avaria?', options: ['Sim', 'Não'] },
+            { key: 'fluido', text: 'O fluido já foi trocado anteriormente?', options: ['Sim', 'Não', 'Nunca'] }
           ].map(q => (
             <div key={q.key} className="bg-gray-50 p-4 rounded-lg border">
               <p className="font-medium text-gray-700">{q.text} *</p>
               <div className="mt-2 flex gap-6">
                 {q.options.map(opt => (
                   <label key={opt}>
-                    <input type="radio" name={q.key} value={opt} required onChange={() => { if(q.key==='fluido') setShowFluidoDetail(opt==='Sim') }}/> {opt}
+                    <input type="radio" name={q.key} value={opt} required onChange={() => { if (q.key === 'fluido') setShowFluidoDetail(opt === 'Sim') }} /> {opt}
                   </label>
                 ))}
               </div>
@@ -154,11 +154,11 @@ export default function Home() {
             <div className="bg-gray-50 p-4 rounded-lg border space-y-4">
               <div>
                 <label className="block font-medium text-gray-700">Quantos km o veículo tinha na última troca? *</label>
-                <input type="number" name="kmUltimaTroca" required className="w-full border p-2 rounded-md mt-1"/>
+                <input type="number" name="kmUltimaTroca" required className="w-full border p-2 rounded-md mt-1" />
               </div>
               <div>
                 <label className="block font-medium text-gray-700">Quando foi aproximadamente essa troca? *</label>
-                <input type="month" name="dataUltimaTroca" required className="w-full border p-2 rounded-md mt-1"/>
+                <input type="month" name="dataUltimaTroca" required className="w-full border p-2 rounded-md mt-1" />
               </div>
             </div>
           )}
@@ -174,14 +174,14 @@ export default function Home() {
             <div className="border rounded-md bg-gray-50 relative">
               <canvas
                 ref={canvasRef}
-                className="w-full h-48 rounded-md cursor-crosshair"
+                className="w-full h-48 rounded-md cursor-crosshair touch-none"
                 onMouseDown={startDraw}
                 onMouseMove={draw}
                 onMouseUp={endDraw}
                 onMouseLeave={endDraw}
-                onTouchStart={startDraw}
-                onTouchMove={draw}
-                onTouchEnd={endDraw}
+                onTouchStart={(e) => { e.preventDefault(); startDraw(e) }}
+                onTouchMove={(e) => { e.preventDefault(); draw(e) }}
+                onTouchEnd={(e) => { e.preventDefault(); endDraw() }}
               />
               <div className="absolute bottom-2 right-2 flex gap-2">
                 <button type="button" onClick={clearSig} className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">Limpar</button>
