@@ -1,0 +1,6 @@
+FROM_EMAIL=vendasgimano@gmail.com
+TO_EMAIL=
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=vendasgimano@gmail.com
+SMTP_PASS=
