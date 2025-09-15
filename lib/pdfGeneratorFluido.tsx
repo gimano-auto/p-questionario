@@ -72,66 +72,103 @@ interface FluidoForm {
   signature?: string; // base64 da assinatura
 }
 
-export const FluidoPDF = ({ form, signature }: FluidoForm) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      {/* Logo */}
-      <Image src="/logo.png" style={styles.logo} />
+export const FluidoPDF = ({ form, signature }: FluidoForm) => {
+  // Lista completa de perguntas com subperguntas
+  const perguntas = [
+    { key: 'manutencaoPrev', label: 'Já fez alguma manutenção preventiva em sua transmissão automática?', details: [
+      { key: 'qualManutencao', label: 'Qual manutenção?' },
+      { key: 'kmUltimaManutencao', label: 'Quantos km desde a última manutenção?' },
+    ]},
+    { key: 'sintoma', label: 'O veículo apresenta ou apresentou algum sintoma aparente?', details: [
+      { key: 'qualSintoma', label: 'Qual sintoma?' },
+      { key: 'condicaoSintoma', label: 'Em qual condição?' },
+    ]},
+    { key: 'patinacao', label: 'O veículo apresenta patinações?', details: [
+      { key: 'velocidadePatina', label: 'Em qual velocidade?' },
+      { key: 'condicaoPatina', label: 'Em qual condição?' },
+    ]},
+    { key: 'perdaPotencia', label: 'O veículo apresenta perda de potência ao sair?', details: [
+      { key: 'driveRe', label: 'Em drive ou marcha ré?' },
+      { key: 'condicaoPerda', label: 'Em qual condição?' },
+    ]},
+    { key: 'trancos', label: 'O veículo apresenta trancos ou solavancos em mudanças de marchas?', details: [
+      { key: 'velocidadeTrancos', label: 'Em quais velocidades?' },
+      { key: 'condicaoTrancos', label: 'Em qual condição?' },
+    ]},
+    { key: 'atrasoEngate', label: 'O veículo apresenta atraso nos engates ao trocar de marcha?', details: [
+      { key: 'velocidadeAtraso', label: 'Em quais velocidades?' },
+      { key: 'condicaoAtraso', label: 'Em qual condição?' },
+    ]},
+    { key: 'luzEmergencia', label: 'Em algum momento a luz de anomalia da transmissão ou injeção acendeu? (modo de emergência)', details: [
+      { key: 'frequenciaLuz', label: 'Com qual frequência?' },
+      { key: 'condicaoLuz', label: 'Em qual condição?' },
+    ]},
+    { key: 'perdaMotor', label: 'O veículo apresenta algum sintoma de perda de potência ou falhas de motor?', details: [
+      { key: 'qualPerdaMotor', label: 'Quais?' },
+    ]},
+    { key: 'manutRecente', label: 'O veículo passou por alguma manutenção recente tais como serviços mecânicos, elétricos, instalação de acessórios ou outros serviços?', details: [
+      { key: 'qualManutRecente', label: 'Quais?' },
+    ]},
+    { key: 'mudancasVelocidade', label: 'Notou alguma vez mudanças de velocidades fora do padrão de normalidade?', details: [
+      { key: 'qualAnormalidade', label: 'Qual anormalidade?' },
+      { key: 'condicaoAnormalidade', label: 'Em qual condição?' },
+    ]},
+    { key: 'problemaArrefecimento', label: 'Algum problema recente no sistema de arrefecimento do motor?', details: [
+      { key: 'qualArrefecimento', label: 'Qual?' },
+    ]},
+    { key: 'modoManual', label: 'As mudanças em modo manual estão funcionando dentro da normalidade?', details: [
+      { key: 'qualModoManual', label: 'Qual anormalidade?' },
+      { key: 'condicaoModoManual', label: 'Em qual condição?' },
+    ]},
+  ];
 
-      {/* Título */}
-      <Text style={styles.header}>
-        Questionário – Troca de Fluido da Transmissão Automática
-      </Text>
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* Logo */}
+        <Image src="/logo.png" style={styles.logo} />
 
-      {/* Dados do Cliente */}
-      <View style={styles.questionBox}>
-        <Text style={styles.sectionHeader}>Informações do Cliente e Veículo</Text>
-        <Text style={styles.answerText}>Nome: {form.cliente}</Text>
-        <Text style={styles.answerText}>Placa: {form.placa}</Text>
-      </View>
+        {/* Título */}
+        <Text style={styles.header}>Questionário – Troca de Fluido da Transmissão Automática</Text>
 
-      {/* Perguntas principais */}
-      {[
-        { key: 'trancos', label: 'O veículo apresenta trancos ou solavancos nas trocas de marcha?' },
-        { key: 'demora', label: 'Sente que a transmissão está demorando para trocar de marcha?' },
-        { key: 'patina', label: 'O câmbio patina (motor acelera, mas o carro demora a responder)?' },
-        { key: 'ruidos', label: 'Há ruídos anormais durante a troca de marcha?' },
-        { key: 'vibracao', label: 'Já percebeu vibração ou trepidação quando o carro arranca ou muda de marcha?' },
-        { key: 'modoSeguranca', label: 'O veículo já apagou ou entrou em modo de segurança?' },
-        { key: 'vazamento', label: 'Há vazamentos de óleo da transmissão?' },
-        { key: 'luzPainel', label: 'Já acendeu no painel a luz de avaria da transmissão?' },
-        { key: 'fluido', label: 'O fluido já foi trocado anteriormente?' },
-      ].map(q => (
-        <View style={styles.questionBox} key={q.key}>
-          <Text style={styles.questionText}>{q.label}</Text>
-          <Text style={styles.answerText}>{form[q.key]}</Text>
-
-          {/* Subperguntas condicionais */}
-          {q.key === 'fluido' && form.fluido === 'Sim' && (
-            <>
-              <Text style={styles.answerText}>KM na última troca: {form.kmUltimaTroca}</Text>
-              <Text style={styles.answerText}>Data da última troca: {form.dataUltimaTroca}</Text>
-            </>
-          )}
+        {/* Dados do Cliente */}
+        <View style={styles.questionBox}>
+          <Text style={styles.sectionHeader}>Informações do Cliente e Veículo</Text>
+          <Text style={styles.answerText}>Nome: {form.cliente}</Text>
+          <Text style={styles.answerText}>Placa: {form.placa}</Text>
         </View>
-      ))}
 
-      {/* Observações */}
-      <View style={styles.questionBox}>
-        <Text style={styles.questionText}>Observações adicionais</Text>
-        <Text style={styles.answerText}>{form.observacao}</Text>
-      </View>
+        {/* Perguntas */}
+        {perguntas.map((q) => (
+          <View style={styles.questionBox} key={q.key}>
+            <Text style={styles.questionText}>{q.label}</Text>
+            <Text style={styles.answerText}>{form[q.key]}</Text>
+            {form[q.key] === 'Sim' &&
+              q.details.map((d) => (
+                <Text style={styles.answerText} key={d.key}>
+                  {d.label}: {form[d.key]}
+                </Text>
+              ))}
+          </View>
+        ))}
 
-      {/* Assinatura */}
-      {signature && (
-        <View style={styles.signatureContainer}>
-          <Text style={styles.signatureLabel}>Assinatura do cliente</Text>
-          <Image src={signature} style={styles.signatureImage} />
+        {/* Observações */}
+        <View style={styles.questionBox}>
+          <Text style={styles.questionText}>Observações adicionais</Text>
+          <Text style={styles.answerText}>{form.observacao}</Text>
         </View>
-      )}
-    </Page>
-  </Document>
-);
+
+        {/* Assinatura */}
+        {signature && (
+          <View style={styles.signatureContainer}>
+            <Text style={styles.signatureLabel}>Assinatura do cliente</Text>
+            <Image src={signature} style={styles.signatureImage} />
+          </View>
+        )}
+      </Page>
+    </Document>
+  );
+};
 
 // Função para abrir PDF
 export async function saveFluidoPDF({ form, signature }: FluidoForm) {
