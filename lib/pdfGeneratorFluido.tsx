@@ -75,51 +75,92 @@ interface FluidoForm {
 export const FluidoPDF = ({ form, signature }: FluidoForm) => {
   // Lista completa de perguntas com subperguntas
   const perguntas = [
-    { key: 'manutencaoPrev', label: 'Já fez alguma manutenção preventiva em sua transmissão automática?', details: [
-      { key: 'qualManutencao', label: 'Qual manutenção?' },
-      { key: 'kmUltimaManutencao', label: 'Quantos km desde a última manutenção?' },
-    ]},
-    { key: 'sintoma', label: 'O veículo apresenta ou apresentou algum sintoma aparente?', details: [
-      { key: 'qualSintoma', label: 'Qual sintoma?' },
-      { key: 'condicaoSintoma', label: 'Em qual condição?' },
-    ]},
-    { key: 'patinacao', label: 'O veículo apresenta patinações?', details: [
-      { key: 'velocidadePatina', label: 'Em qual velocidade?' },
-      { key: 'condicaoPatina', label: 'Em qual condição?' },
-    ]},
-    { key: 'perdaPotencia', label: 'O veículo apresenta perda de potência ao sair?', details: [
-      { key: 'driveRe', label: 'Em drive ou marcha ré?' },
-      { key: 'condicaoPerda', label: 'Em qual condição?' },
-    ]},
-    { key: 'trancos', label: 'O veículo apresenta trancos ou solavancos em mudanças de marchas?', details: [
-      { key: 'velocidadeTrancos', label: 'Em quais velocidades?' },
-      { key: 'condicaoTrancos', label: 'Em qual condição?' },
-    ]},
-    { key: 'atrasoEngate', label: 'O veículo apresenta atraso nos engates ao trocar de marcha?', details: [
-      { key: 'velocidadeAtraso', label: 'Em quais velocidades?' },
-      { key: 'condicaoAtraso', label: 'Em qual condição?' },
-    ]},
-    { key: 'luzEmergencia', label: 'Em algum momento a luz de anomalia da transmissão ou injeção acendeu? (modo de emergência)', details: [
-      { key: 'frequenciaLuz', label: 'Com qual frequência?' },
-      { key: 'condicaoLuz', label: 'Em qual condição?' },
-    ]},
-    { key: 'perdaMotor', label: 'O veículo apresenta algum sintoma de perda de potência ou falhas de motor?', details: [
-      { key: 'qualPerdaMotor', label: 'Quais?' },
-    ]},
-    { key: 'manutRecente', label: 'O veículo passou por alguma manutenção recente tais como serviços mecânicos, elétricos, instalação de acessórios ou outros serviços?', details: [
-      { key: 'qualManutRecente', label: 'Quais?' },
-    ]},
-    { key: 'mudancasVelocidade', label: 'Notou alguma vez mudanças de velocidades fora do padrão de normalidade?', details: [
-      { key: 'qualAnormalidade', label: 'Qual anormalidade?' },
-      { key: 'condicaoAnormalidade', label: 'Em qual condição?' },
-    ]},
-    { key: 'problemaArrefecimento', label: 'Algum problema recente no sistema de arrefecimento do motor?', details: [
-      { key: 'qualArrefecimento', label: 'Qual?' },
-    ]},
-    { key: 'modoManual', label: 'As mudanças em modo manual estão funcionando dentro da normalidade?', details: [
-      { key: 'qualModoManual', label: 'Qual anormalidade?' },
-      { key: 'condicaoModoManual', label: 'Em qual condição?' },
-    ]},
+    {
+      key: '1',
+      label: '1 - Já fez algum reparo em sua transmissão automática?',
+      details: [
+        { key: '1.1', label: 'Qual tinha sido o problema?' },
+        { key: '1.2', label: 'Quantos km desde do último reparo?' },
+      ],
+    },
+    {
+      key: '2',
+      label: '2 - O veículo apresenta patinações (motor acelera, mas o carro demora a responder)?',
+      details: [
+        { key: '2.1', label: 'Em qual velocidade?' },
+        { key: '2.2', label: 'Em qual condição: subida e(ou) descidas / veículo quente ou frio?' },
+      ],
+    },
+    {
+      key: '3',
+      label: '3 - O veículo apresenta perda de potência ao sair?',
+      details: [
+        { key: '3.1', label: 'Em drive (D) ou marcha ré?' },
+        { key: '3.2', label: 'Em qual condição: subida e(ou) descidas / veículo quente ou frio?' },
+      ],
+    },
+    {
+      key: '4',
+      label: '4 -  veículo apresenta trancos ou solavancos em mudanças de marchas?',
+      details: [
+        { key: '4.1', label: 'Em quais velocidades?' },
+        { key: '4.2', label: 'Em qual condição: subida e(ou) descidas / veículo quente ou frio?' },
+      ],
+    },
+    {
+      key: '5',
+      label: '5 - O veículo apresenta atraso nos engates ao trocar de marcha?',
+      details: [
+        { key: '5.1', label: 'Em quais velocidades?' },
+        { key: '5.2', label: 'Em qual condição: subida e(ou) descidas / veículo quente ou frio?' },
+      ],
+    },
+    {
+      key: '6',
+      label: '6 - Em algum momento a luz de anomalia da transmissão ou injeção acendeu? (modo de emergência)',
+      image: '',
+      details: [
+        { key: '6.1', label: 'Com qual frequência?' },
+        { key: '6.2', label: 'Em qual condição: subida e(ou) descidas / veículo quente ou frio?' },
+      ],
+    },
+    {
+      key: '7',
+      label: '7 - O veículo apresenta algum sintoma de perda de potência ou falhas de motor?',
+      details: [
+        { key: '7.1', label: 'Quais?' },
+      ],
+    },
+    {
+      key: '8',
+      label: '8 - O veículo passou por alguma manutenção recente tais como, serviços mecânicos, elétricos, instalação de acessórios ou outros serviços?',
+      details: [
+        { key: '8.1', label: 'Quais?' },
+      ],
+    },
+    {
+      key: '9',
+      label: '9 - Notou alguma vez mudanças de velocidades fora do padrão de normalidade?',
+      details: [
+        { key: '9.1', label: 'Descreva como ocorreu.' },
+        { key: '9.2', label: 'Em qual condição, veículo quente ou frio?' },
+      ],
+    },
+    {
+      key: '10',
+      label: '10 - Algum problema recente na circulação do fluido do radiador (sistema de arrefecimento) do motor?',
+      details: [
+        { key: '10.1', label: 'Qual?' },
+      ],
+    },
+    {
+      key: '11',
+      label: '11 - As mudanças em modo manual estão funcionando dentro da normalidade?',
+      details: [
+        { key: '11.1', label: 'Qual anormalidade?' },
+        { key: '11.2', label: 'Em qual condição: subida e(ou) descidas / veículo quente ou frio?' },
+      ],
+    },
   ];
 
   return (
