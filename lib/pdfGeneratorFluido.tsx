@@ -180,18 +180,30 @@ export const FluidoPDF = ({ form, signature }: FluidoForm) => {
         </View>
 
         {/* Perguntas */}
+        {/* Perguntas */}
         {perguntas.map((q) => (
           <View style={styles.questionBox} key={q.key}>
             <Text style={styles.questionText}>{q.label}</Text>
             <Text style={styles.answerText}>{form[q.key]}</Text>
-            {form[q.key] === 'Sim' &&
-              q.details.map((d) => (
+
+            {/* Para as perguntas 1 a 10 → exibe detalhes quando for "Sim" */}
+            {q.key !== '11' && form[q.key] === 'Sim' &&
+              q.details?.map((d) => (
+                <Text style={styles.answerText} key={d.key}>
+                  {d.label}: {form[d.key]}
+                </Text>
+              ))}
+
+            {/* Para a pergunta 11 → exibe detalhes quando for "Não" */}
+            {q.key === '11' && form[q.key] === 'Não' &&
+              q.details?.map((d) => (
                 <Text style={styles.answerText} key={d.key}>
                   {d.label}: {form[d.key]}
                 </Text>
               ))}
           </View>
         ))}
+
 
         {/* Observações */}
         <View style={styles.questionBox}>
